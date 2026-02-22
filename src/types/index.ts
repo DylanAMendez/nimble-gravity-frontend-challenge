@@ -6,3 +6,8 @@ export interface Candidate {
     lastName: string;
     email: string;
 }
+
+export interface Job {
+    id: string;
+    title: string;
+}

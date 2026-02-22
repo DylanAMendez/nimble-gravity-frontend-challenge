@@ -17,6 +17,7 @@ export const CandidateProfile = ({ onCandidateLoaded }: Props) => {
 
 
     useEffect(() => {
+
         GetCandidateByEmail(MY_EMAIL)
             .then((data) => {
                 setCandidate(data);
