@@ -3,6 +3,8 @@ import { type Candidate } from "../types/index";
 import { GetCandidateByEmail } from '../services/api';
 import { useEffect, useState } from 'react';
 
+import styles from '../styles/Candidate.module.css';
+
 interface Props {
     onCandidateLoaded: (candidate: Candidate) => void;
 }
@@ -31,7 +33,7 @@ export const CandidateProfile = ({ onCandidateLoaded }: Props) => {
     if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
     return (
-        <div style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem', borderRadius: '8px' }}>
+        <div className={styles['candidate-card']}>
 
             <h2>Candidato: {candidate?.firstName} {candidate?.lastName}</h2>
             <p>Email: {candidate?.email}</p>

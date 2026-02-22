@@ -4,6 +4,8 @@ import { GetJobs } from '../services/api';
 
 import { useEffect, useState } from 'react';
 
+import { JobItem } from './JobItem';
+
 interface Props {
     onJobsList: (jobs: Job[]) => void;
 }
@@ -29,24 +31,32 @@ export const JobsList = ({ onJobsList }: Props) => {
             });
     }, []);
 
+    const handleJobSubmit = (jobId: string, repoUrl: string) => {
+        console.log(`Enviando postulación para el Job ID: ${jobId}`);
+        console.log(`Repo URL: ${repoUrl}`);
+
+        alert(`Listo para enviar el Step 5 con el repo: ${repoUrl}`);
+    };
+
     if (loading) return <p>Cargando lista de trabajos...</p>;
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
-    if (jobs.length === 0) {
-        return <p>No hay trabajos disponibles en este momento.</p>;
-    }
-
     return (
-        <div>
-            <h2>Lista de Trabajos</h2>
+        <div >
+            <h2>Posiciones Abiertas</h2>
 
-            <ul>
-                {jobs.map((job) => (
-                    <li key={job.id}>{job.title}</li>
+            <ul style={{ padding: 0 }}>
+
+                {jobs.map((job) =>
+                (
+                    <JobItem
+                        key={job.id}
+                        job={job}
+                        onSubmit={handleJobSubmit}
+                    />
                 ))}
             </ul>
 
         </div>
-    )
-
-}
+    );
+};

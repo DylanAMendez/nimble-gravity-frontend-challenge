@@ -3,16 +3,17 @@ import { type Candidate, type Job } from "../types/index.ts";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+const API_ENDPOINT_GET_CANDIDATE_BY_EMAIL = import.meta.env.VITE_API_ENDPOINT_GET_CANDIDATE_BY_EMAIL;
+
 const API_ENDPOINT_GET_JOBS = import.meta.env.VITE_API_ENDPOINT_GET_JOBS;
 
 export const GetCandidateByEmail = async (email: string): Promise<Candidate> => {
     try {
 
-        const res = await fetch(`${BASE_URL}/api/candidate/get-by-email?email=${email}`)
+        const res = await fetch(`${BASE_URL}${API_ENDPOINT_GET_CANDIDATE_BY_EMAIL}${email}`)
 
         if (!res.ok) {
-            const error = await res.json();
-            throw new Error(error.message || "Error al obtener candidato con email: " + email);
+            throw new Error(`${res.status} ${res.statusText}`);
         }
 
         // console.log("Respuesta del servidor:", await res.json());
