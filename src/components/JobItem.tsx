@@ -45,7 +45,7 @@ export const JobItem = ({ job, onSubmit }: JobItemProps) => {
                 />
 
                 <button type="submit" className={styles['job-button']}>
-                    Enviar
+                    Submit
                 </button>
             </form>
         </li>

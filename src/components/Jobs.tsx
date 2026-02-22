@@ -1,6 +1,6 @@
-import { type Job } from "../types/index";
+import { type Candidate, type Job, type ApplicationBody } from "../types/index";
 
-import { GetJobs } from '../services/api';
+import { ApplyToJob, GetJobs } from '../services/api';
 
 import { useEffect, useState } from 'react';
 
@@ -8,9 +8,10 @@ import { JobItem } from './JobItem';
 
 interface Props {
     onJobsList: (jobs: Job[]) => void;
+    candidate: Candidate;
 }
 
-export const JobsList = ({ onJobsList }: Props) => {
+export const JobsList = ({ onJobsList, candidate }: Props) => {
 
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
@@ -31,13 +32,27 @@ export const JobsList = ({ onJobsList }: Props) => {
             });
     }, []);
 
-    const handleJobSubmit = (jobId: string, repoUrl: string) => {
-        console.log(`Enviando postulación para el Job ID: ${jobId}`);
-        console.log(`Repo URL: ${repoUrl}`);
+    const handleJobSubmit = async (jobId: string, repoUrl: string) => {
+        try {
+            const applicationData: ApplicationBody =
+            {
+                uuid: candidate.uuid,
+                jobId: jobId,
+                candidateId: String(candidate.candidateId),
+                repoUrl: repoUrl,
+                applicationId: candidate.applicationId
+            };
 
-        alert(`Listo para enviar el Step 5 con el repo: ${repoUrl}`);
+            const result = await ApplyToJob(applicationData);
+
+            if (result.ok) {
+                console.log(`Postulación exitosa para ${candidate.firstName}!`);
+                alert(`Postulación exitosa para ${candidate.firstName}!`);
+            }
+        } catch (err: any) {
+            alert(err.message);
+        }
     };
-
     if (loading) return <p>Cargando lista de trabajos...</p>;
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
 

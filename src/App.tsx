@@ -18,7 +18,7 @@ function App() {
 
       <CandidateProfile onCandidateLoaded={setCandidate} />
 
-      <JobsList onJobsList={setJobs} />
+      <JobsList onJobsList={setJobs} candidate={candidate} />
 
     </div>
 

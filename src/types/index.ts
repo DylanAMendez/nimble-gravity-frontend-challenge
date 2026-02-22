@@ -11,3 +11,11 @@ export interface Job {
     id: string;
     title: string;
 }
+
+export interface ApplicationBody {
+    uuid: string;
+    jobId: string;
+    candidateId: string;
+    repoUrl: string;
+    applicationId: string;
+}
